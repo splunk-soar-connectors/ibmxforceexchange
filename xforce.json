@@ -1,7 +1,7 @@
 {
   "appid": "653a4735-1eed-4cb9-98c4-b40408e60b22",
   "name": "IBM XForce",
-  "description": "Placeholder",
+  "description": "This app implements various <b>investigative</b> actions on the <b>IBM XForce</b> device",
   "publisher": "AvantGarde Partners",
   "package_name": "phantom_xforce",
   "type": "investigative",
@@ -15,30 +15,30 @@
   "min_phantom_version": "1.0.240",
   "logo": "ibm-xforce-logo.png",
   "configuration": {
-    "api-key": {
-      "description": "X-Force API Key",
-      "data_type": "password",
-      "required": true,
-      "order": 0
-    },
-    "api-password": {
-      "description": "X-Force API Password",
-      "data_type": "password",
-      "required": true,
-      "order": 1
-    },
     "base_url": {
       "description": "X-Force Base URL",
       "data_type": "string",
       "required": true,
-      "order": 2,
+      "order": 0,
       "default": "https://api.xforce.ibmcloud.com"
     },
     "verify_cert": {
       "description": "Verify Server Certificate",
       "data_type": "boolean",
-      "order": 3,
+      "order": 1,
       "default": false
+    },
+    "api-key": {
+      "description": "X-Force API Key",
+      "data_type": "password",
+      "required": true,
+      "order": 2
+    },
+    "api-password": {
+      "description": "X-Force API Password",
+      "data_type": "password",
+      "required": true,
+      "order": 3
     }
   },
   "actions": [
@@ -510,7 +510,7 @@
         {
           "data_path": "action_result.data.*.xforce_url_malware.malware.*.filepath",
           "data_type": "string",
-          "contains": "file path"
+          "contains": ["file path"]
         },
         {
           "data_path": "action_result.data.*.xforce_url_malware.malware.*.origin",
@@ -971,7 +971,7 @@
         {
           "data_path": "action_result.data.*.xforce_url_malware.malware.*.filepath",
           "data_type": "string",
-          "contains": "file path"
+          "contains": ["file path"]
         },
         {
           "data_path": "action_result.data.*.xforce_url_malware.malware.*.origin",
