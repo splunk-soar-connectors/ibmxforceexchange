@@ -1,0 +1,9 @@
+Splunk SOAR IBM XForce
+Copyright (c) AvantGarde Partners 2017
+
+Third-party Software Attributions:
+
+Library: requests
+Version: 2.25.0
+License: Apache 2.0
+Kenneth Reitz
