@@ -10,11 +10,6 @@ Minimum Product Version: 1\.0\.240
 
 This app implements various <b>investigative</b> actions on the <b>IBM XForce</b> device
 
-# Phantom Xforce
-
-Phantom app for IBM XForce
-
-
 ### Configuration Variables
 The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a XForce asset in SOAR.
 
