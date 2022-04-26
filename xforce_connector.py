@@ -12,12 +12,14 @@
 #
 # --
 
-import sys
 import datetime
-from phantom.action_result import ActionResult
+import sys
+
 import phantom.app as phantom
+from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 from urlparse import urlparse
+
 from xforce import xforce
 
 
@@ -142,12 +144,6 @@ class xforce_connector(BaseConnector):
         try:
             whois_results = xf.get_whois(param['query_value'])
         except Exception as err:
-            return self.set_status_save_progress(
-                phantom.APP_ERROR,
-                'Error running IBM X_Force WHOIS. Details:' + err.message
-            )
-
-        if 'xforce_whois' not in whois_results:
             return self.set_status_save_progress(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force WHOIS. Details:' + err.message
@@ -540,9 +536,7 @@ class xforce_connector(BaseConnector):
                 + err.message
             )
 
-
         if file_report_results['xforce_malware_report'].get('error') is not None:
-
             summary = {
                 'risk': 'Unkown',
                 'cnc_servers': 0,
