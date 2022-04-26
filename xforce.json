@@ -6,13 +6,14 @@
     "package_name": "phantom_xforce",
     "type": "investigative",
     "license": "Copyright (c) AvantGarde Partners 2017",
-    "main_module": "xforce_connector.pyc",
+    "main_module": "xforce_connector.py",
     "app_version": "1.0.3",
     "utctime_updated": "2022-01-07T20:46:01.000000Z",
     "product_vendor": "IBM",
     "product_name": "XForce",
     "product_version_regex": ".*",
     "min_phantom_version": "1.0.240",
+    "python_version": "3",
     "logo": "ibm-xforce-logo.png",
     "configuration": {
         "base_url": {
