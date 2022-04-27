@@ -1,7 +1,7 @@
 {
     "appid": "653a4735-1eed-4cb9-98c4-b40408e60b22",
     "name": "IBM XForce",
-    "description": "This app implements various <b>investigative</b> actions on the <b>IBM XForce</b> device",
+    "description": "This app implements various 'investigative' actions on the 'IBM XForce' device",
     "publisher": "AvantGarde Partners",
     "package_name": "phantom_xforce",
     "type": "investigative",
