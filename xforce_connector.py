@@ -14,11 +14,11 @@
 
 import datetime
 import sys
+from urllib.parse import urlparse
 
 import phantom.app as phantom
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
-from urlparse import urlparse
 
 from xforce import xforce
 
