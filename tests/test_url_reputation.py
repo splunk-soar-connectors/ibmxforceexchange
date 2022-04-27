@@ -1,5 +1,6 @@
-from xforce import xforce
 import datetime
+
+from xforce import xforce
 
 
 def cleanup_dict(results_dict, cleanup_keys, key_desc, value_desc):
@@ -107,6 +108,7 @@ def test_valid_url_reputation():
                 ).date()
             ])
     }
+    print('summary: %s' % summary)
 
     url_report_results = cleanup_dict(
         url_report_results,
@@ -156,11 +158,10 @@ def test_valid_url_reputation():
         None, 'record'
     )
 
-
     assert True
 
-def test_invalid_url_reputation():
 
+def test_invalid_url_reputation():
     xf = xforce(
         '5c276816-8d76-4be2-99dc-ddfff748060c',
         '74afb990-7f63-402e-970b-02942489559a'
@@ -190,11 +191,9 @@ def test_invalid_url_reputation():
     url_report_results.update(dns_results)
 
     if url_report_results['xforce_url_report'].get('error') is not None:
-
-        print ('finish here')
+        print('finish here')
         assert True
         return True
-
 
     summary = {
         'score':
@@ -220,18 +219,12 @@ def test_invalid_url_reputation():
             0 if 'error' in url_report_results['xforce_url_malware']
             else
             len([
-                malware for malware
-                in url_report_results['xforce_url_malware']['malware']
-                if (
-                    datetime.date.today()
-                    - datetime.timedelta(days=90)
-                )
-                <= datetime.datetime.strptime(
-                    malware['lastseen'],
-                    '%Y-%m-%dT%H:%M:%SZ'
-                ).date()
+                malware for malware in url_report_results['xforce_url_malware']['malware'] if
+                (datetime.date.today() - datetime.timedelta(days=90)) <= datetime.datetime.strptime(malware['lastseen'],
+                                                                                                    '%Y-%m-%dT%H:%M:%SZ').date()
             ])
     }
+    print('summary: %s' % summary)
 
     url_report_results = cleanup_dict(
         url_report_results,
@@ -281,7 +274,7 @@ def test_invalid_url_reputation():
         None, 'record'
     )
 
-    print url_report_results
+    print(url_report_results)
 
     raise Exception
 

@@ -1,5 +1,5 @@
 from xforce import xforce
-import datetime
+
 
 def _cleanup_dict(results_dict, cleanup_keys, key_desc, value_desc):
     if len(cleanup_keys) > 0:
@@ -39,8 +39,8 @@ def _cleanup_dict(results_dict, cleanup_keys, key_desc, value_desc):
             return {value_desc: results_dict}
     return results_dict
 
-def test_ip_reputation():
 
+def test_ip_reputation():
     xf = xforce(
         '5c276816-8d76-4be2-99dc-ddfff748060c',
         '74afb990-7f63-402e-970b-02942489559a'
@@ -65,95 +65,90 @@ def test_ip_reputation():
 
     ip_report_results.update(dns_results)
 
-    summary = {
-        'score':
-            (
-                ip_report_results
-                ['xforce_ip_report']
-                ['score']
-            ),
-        'reason':
-            (
-                ip_report_results
-                ['xforce_ip_report']
-                ['reasonDescription']
-            ),
-        'category':
-            ', '.join([
-                cat + '('
-                + str(
-                    ip_report_results
-                    ['xforce_ip_report']
-                    ['cats']
-                    [cat]
-                )
-                + ')'
-                for cat
-                in (
-                    ip_report_results
-                    ['xforce_ip_report']
-                    ['categoryDescriptions']
-                )
-            ]),
-        'country':
-            (
-                ip_report_results
-                ['xforce_ip_report']
-                ['geo']
-                ['country']
-            ),
-        'earliest_entry':
-            (
-                ip_report_results
-                ['xforce_ip_report']
-                ['history']
-                [0]
-                ['created']
-            ),
-        'latest_entry':
-            (
-                ip_report_results
-                ['xforce_ip_report']
-                ['history']
-                [
-                    len(
-                        ip_report_results
-                        ['xforce_ip_report']
-                        ['history']
-                    )-1
-                ]
-                ['created']
-            ),
-        'subnets':
-            ','.join([
-                subnet['subnet'] for subnet in (
-                    ip_report_results
-                    ['xforce_ip_report']
-                    ['subnets']
-                )
-            ]),
-        'malware_observed':
-            len(
-                ip_report_results['xforce_ip_malware'].get('malware')
-                or []
-            ),
-        'malware_last_90':
-            0 if 'error' in ip_report_results['xforce_ip_malware']
-            else
-            len([
-                malware for malware
-                in ip_report_results['xforce_ip_malware']['malware']
-                if (
-                    datetime.date.today()
-                    - datetime.timedelta(days=_100000)
-                )
-                <= datetime.datetime.strptime(
-                    malware['lastseen'],
-                    '%Y-%m-%dT%H:%M:%SZ'
-                ).date()
-            ])
-
-    }
+    # TODO: _100000 is not set anywhere.
+    # summary = {
+    #     'score':
+    #         (
+    #             ip_report_results
+    #             ['xforce_ip_report']
+    #             ['score']
+    #         ),
+    #     'reason':
+    #         (
+    #             ip_report_results
+    #             ['xforce_ip_report']
+    #             ['reasonDescription']
+    #         ),
+    #     'category':
+    #         ', '.join([
+    #             cat + '('
+    #             + str(
+    #                 ip_report_results
+    #                 ['xforce_ip_report']
+    #                 ['cats']
+    #                 [cat]
+    #             )
+    #             + ')'
+    #             for cat
+    #             in (
+    #                 ip_report_results
+    #                 ['xforce_ip_report']
+    #                 ['categoryDescriptions']
+    #             )
+    #         ]),
+    #     'country':
+    #         (
+    #             ip_report_results
+    #             ['xforce_ip_report']
+    #             ['geo']
+    #             ['country']
+    #         ),
+    #     'earliest_entry':
+    #         (
+    #             ip_report_results
+    #             ['xforce_ip_report']
+    #             ['history']
+    #             [0]
+    #             ['created']
+    #         ),
+    #     'latest_entry':
+    #         (
+    #             ip_report_results
+    #             ['xforce_ip_report']
+    #             ['history']
+    #             [
+    #                 len(
+    #                     ip_report_results
+    #                     ['xforce_ip_report']
+    #                     ['history']
+    #                 ) - 1
+    #                 ]
+    #             ['created']
+    #         ),
+    #     'subnets':
+    #         ','.join([
+    #             subnet['subnet'] for subnet in (
+    #                 ip_report_results
+    #                 ['xforce_ip_report']
+    #                 ['subnets']
+    #             )
+    #         ]),
+    #     'malware_observed':
+    #         len(
+    #             ip_report_results['xforce_ip_malware'].get('malware')
+    #             or []
+    #         ),
+    #     'malware_last_90':
+    #         0 if 'error' in ip_report_results['xforce_ip_malware']
+    #         else
+    #         len([
+    #             malware for malware in ip_report_results['xforce_ip_malware']['malware'] if
+    #             (datetime.date.today() - datetime.timedelta(days=_100000)) <= datetime.datetime.strptime(
+    #                 malware['lastseen'], '%Y-%m-%dT%H:%M:%SZ').date()
+    #         ])
+    #
+    # }
+    # print('summary: %s' % summary)
 
     ip_report_results = _cleanup_dict(
         ip_report_results,
@@ -172,7 +167,6 @@ def test_ip_reputation():
         ['xforce_ip_report', 'categoryDescriptions'],
         'category', 'description'
     )
-
 
     ip_report_results = _cleanup_dict(
         ip_report_results,
@@ -204,7 +198,7 @@ def test_ip_reputation():
         None, 'record'
     )
 
-    print ip_report_results
+    print(ip_report_results)
 
     raise Exception
 
