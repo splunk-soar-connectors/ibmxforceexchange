@@ -52,6 +52,7 @@
             "read_only": false,
             "parameters": {
                 "ip": {
+                    "order": 0,
                     "description": "IP Address to Investigate",
                     "contains": [
                         "ip"
@@ -390,6 +391,7 @@
             "read_only": false,
             "parameters": {
                 "query_value": {
+                    "order": 0,
                     "description": "Domain to Investigate",
                     "contains": [
                         "domain",
@@ -621,6 +623,7 @@
             "read_only": false,
             "parameters": {
                 "query_value": {
+                    "order": 0,
                     "description": "Domain to Investigate",
                     "contains": [
                         "domain",
@@ -752,6 +755,7 @@
             "read_only": false,
             "parameters": {
                 "query_value": {
+                    "order": 0,
                     "description": "IP to Investigate",
                     "contains": [
                         "ip"
@@ -883,6 +887,7 @@
             "read_only": false,
             "parameters": {
                 "query_value": {
+                    "order": 0,
                     "description": "URL to Investigate",
                     "contains": [
                         "url"
@@ -1113,6 +1118,7 @@
             "read_only": false,
             "parameters": {
                 "hash": {
+                    "order": 0,
                     "description": "File Hash to Investigate",
                     "contains": [
                         "hash",
