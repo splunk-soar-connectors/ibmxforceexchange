@@ -437,7 +437,8 @@
                     "data_path": "action_result.parameter.query_value",
                     "data_type": "string",
                     "contains": [
-                        "domain"
+                        "domain",
+                        "url"
                     ],
                     "column_name": "Domain",
                     "column_order": 1
@@ -683,7 +684,8 @@
                     "data_path": "action_result.parameter.query_value",
                     "data_type": "string",
                     "contains": [
-                        "domain"
+                        "domain",
+                        "url"
                     ],
                     "column_name": "Domain",
                     "column_order": 1
