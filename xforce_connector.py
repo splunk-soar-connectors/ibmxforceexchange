@@ -23,7 +23,7 @@ from phantom.base_connector import BaseConnector
 from xforce import xforce
 
 
-class xforce_connector(BaseConnector):
+class XforceConnector(BaseConnector):
 
     def initialize(self):
         return phantom.APP_SUCCESS
@@ -749,7 +749,7 @@ if __name__ == '__main__':
         in_json = f.read()
         in_json = json.loads(in_json)
         print(json.dumps(in_json, indent=4))
-        connector = xforce_connector()
+        connector = XforceConnector()
         connector.print_progress_message = True
         try:
             ret_val = connector._handle_action(json.dumps(in_json), None)
