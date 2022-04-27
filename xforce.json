@@ -45,7 +45,7 @@
     "actions": [
         {
             "action": "ip reputation",
-            "description": "Returns IP reputation report.",
+            "description": "Returns IP reputation report",
             "verbose": "Runs the X-Force IP Report, IP Malware Report, and DNS Lookup.",
             "type": "investigate",
             "identifier": "ip reputation",
@@ -880,7 +880,7 @@
         },
         {
             "action": "url reputation",
-            "description": "Returns URL reputation report.",
+            "description": "Returns URL reputation report",
             "verbose": "Runs the X-Force URL Report, URL Malware Report, and DNS Lookup.",
             "type": "investigate",
             "identifier": "url reputation",
@@ -1112,7 +1112,7 @@
         },
         {
             "action": "file reputation",
-            "description": "Returns malware report for a given hash.",
+            "description": "Returns malware report for a given hash",
             "type": "investigate",
             "identifier": "file reputation",
             "read_only": false,
