@@ -12,7 +12,7 @@
     "product_vendor": "IBM",
     "product_name": "XForce",
     "product_version_regex": ".*",
-    "min_phantom_version": "1.0.240",
+    "min_phantom_version": "5.2.0",
     "python_version": "3",
     "logo": "ibm-xforce-logo.png",
     "configuration": {
