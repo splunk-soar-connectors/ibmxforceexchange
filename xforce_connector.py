@@ -752,7 +752,7 @@ if __name__ == '__main__':
         connector = XforceConnector()
         connector.print_progress_message = True
         try:
-            ret_val = connector._handle_action(json.dumps(in_json), None)
+            ret_val = connector.handle_action(json.dumps(in_json))
         except:
             print(format_exc())
         print(json.dumps(json.loads(ret_val), indent=4))
