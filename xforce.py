@@ -1,7 +1,7 @@
 # --
 # File: xforce.py
 #
-# Copyright (c) Avantgarde Partners, 2017
+# Copyright (c) AvantGarde Partners 2017
 #
 # This unpublished material is proprietary to Avantgarde Partners
 # All rights reserved. The methods and
