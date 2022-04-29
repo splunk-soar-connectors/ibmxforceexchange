@@ -1,5 +1,4 @@
 from xforce import xforce
-import datetime
 
 
 def _cleanup_dict(results_dict, cleanup_keys, key_desc, value_desc):
@@ -55,7 +54,7 @@ def test_valid_file_hash():
 
     try:
         file_report_results = (
-            xf.get_malware_report('25909c9e62b870711309761791c735154b0620b5')
+            xf.get_malware_report('25909c9e62b870711309761791c735154b0620b5')  # pragma: allowlist secret
         )
     except Exception as err:
         raise err
@@ -108,8 +107,7 @@ def test_valid_file_hash():
     print(file_report_results)
 
     if file_report_results['xforce_malware_report'].get('error') is not None:
-
-        print ('finish here')
+        print('finish here')
         assert True
         return True
 
@@ -200,7 +198,6 @@ def test_valid_file_hash():
         )
     ]
 
-
     assert True
 
 
@@ -218,17 +215,16 @@ def test_invalid_file_hash():
 
     try:
         file_report_results = (
-            xf.get_malware_report('5e486f0f008b4fd4048767c41a16cb4776f5699c')
+            xf.get_malware_report('5e486f0f008b4fd4048767c41a16cb4776f5699c')  # pragma: allowlist secret
         )
     except Exception as err:
         raise err
 
-    print file_report_results['xforce_malware_report']
-    print file_report_results['xforce_malware_report'].get('error')
+    print(file_report_results['xforce_malware_report'])
+    print(file_report_results['xforce_malware_report'].get('error'))
 
     if file_report_results['xforce_malware_report'].get('error') is not None:
-
-        print ('finish here')
+        print('finish here')
         assert True
         return True
 
@@ -276,126 +272,105 @@ def test_invalid_file_hash():
         )
     )
 
-
     summary = {
         'risk':
-            (
-                file_report_results
-                ['xforce_malware_report']
-                .get('malware', {'risk': 'Unknown'})
-                .get('risk', 'Uknown')
-            ),
+            (file_report_results['xforce_malware_report'].get('malware', {'risk': 'Unknown'}).get('risk', 'Uknown')),
         'cnc_servers': cnc_server_count,
         'email_sources': email_source_count,
         'email_subjects': email_subject_count,
         'download_sources': download_source_count,
-        'family':
-            ','.join(
-                [
-                    family for family in (
-                        file_report_results
-                        ['xforce_malware_report']
-                        .get('malware', {'origins': None})
-                        .get('origins', {'external': None})
-                        .get('family', [])
-                    )
-                ]
-                +
-                [
-                    family
-                    + '(' + str(family_dict.get('count', 0)) + ')'
-                    for family, family_dict in (
-                        file_report_results
-                        ['xforce_malware_report']
-                        .get('malware', {'familyMembers': None})
-                        .get('familyMembers', {}).items()
-                    )
-                ]
-
-            )
+        'family': ','.join([family for family in (
+            file_report_results['xforce_malware_report'].get('malware', {'origins': None}).get('origins',
+                                                                                               {'external': None}).get(
+                'family', []))]
+                           +
+                           [family + '(' + str(family_dict.get('count', 0)) + ')' for family, family_dict in (
+                               file_report_results['xforce_malware_report'].get('malware', {'familyMembers': None}).get(
+                                   'familyMembers', {}).items())])
     }
 
     print(summary)
 
-    if 'malware' in file_report_results['xforce_malware_report']:
-        file_report_results['xforce_malware_report']['malware']['family'] = (
-            _massage_list_data(
-                'name',
-                (
-                    file_report_results
-                    ['xforce_malware_report']
-                    ['malware']
-                    ['family']
-                )
-            )
-        )
-
-        if 'origins' in (
-            file_report_results
-            ['xforce_malware_report']
-            ['malware']
-        ):
-
-            if 'external' in (
-                file_report_results
-                ['xforce_malware_report']
-                ['malware']
-                ['origins']
-            ):
-                (
-                    file_report_results
-                    ['xforce_malware_report']
-                    ['malware']
-                    ['origins']
-                    ['external']
-                    ['family']
-                ) = _massage_list_data(
-                    'name',
-                    file_report_results
-                    ['xforce_malware_report']
-                    ['malware']
-                    ['origins']
-                    ['external']
-                    ['family']
-                )
-
-        if 'subjects' in (
-            file_report_results
-            ['xforce_malware_report']
-            ['malware']
-            ['origins']
-        ):
-            for row in (
-                file_report_results
-                ['xforce_malware_report']
-                ['malware']
-                ['origins']
-                ['subjects']
-                .get('rows', [])
-            ):
-                row['ips'] = _massage_list_data(
-                    'ip',
-                    row['ips']
-                )
-
-        (
-            file_report_results
-            ['xforce_malware_report']
-            ['malware']
-            ['familyMembers']
-        ) = [
-            {
-                'name': key_field,
-                'count': value_field['count']
-            }
-            for key_field, value_field in (
-                file_report_results
-                ['xforce_malware_report']
-                ['malware']
-                ['familyMembers']
-                .items()
-            )
-        ]
+    # TODO: _massage_list_data is not set anywhere.
+    # if 'malware' in file_report_results['xforce_malware_report']:
+    #     file_report_results['xforce_malware_report']['malware']['family'] = (
+    #         _massage_list_data(
+    #             'name',
+    #             (
+    #                 file_report_results
+    #                 ['xforce_malware_report']
+    #                 ['malware']
+    #                 ['family']
+    #             )
+    #         )
+    #     )
+    #
+    #     if 'origins' in (
+    #         file_report_results
+    #         ['xforce_malware_report']
+    #         ['malware']
+    #     ):
+    #
+    #         if 'external' in (
+    #             file_report_results
+    #             ['xforce_malware_report']
+    #             ['malware']
+    #             ['origins']
+    #         ):
+    #             (
+    #                 file_report_results
+    #                 ['xforce_malware_report']
+    #                 ['malware']
+    #                 ['origins']
+    #                 ['external']
+    #                 ['family']
+    #             ) = _massage_list_data(
+    #                 'name',
+    #                 file_report_results
+    #                 ['xforce_malware_report']
+    #                 ['malware']
+    #                 ['origins']
+    #                 ['external']
+    #                 ['family']
+    #             )
+    #
+    #     if 'subjects' in (
+    #         file_report_results
+    #         ['xforce_malware_report']
+    #         ['malware']
+    #         ['origins']
+    #     ):
+    #         for row in (
+    #             file_report_results
+    #             ['xforce_malware_report']
+    #             ['malware']
+    #             ['origins']
+    #             ['subjects']
+    #             .get('rows', [])
+    #         ):
+    #             row['ips'] = _massage_list_data(
+    #                 'ip',
+    #                 row['ips']
+    #             )
+    #
+    #     (
+    #         file_report_results
+    #         ['xforce_malware_report']
+    #         ['malware']
+    #         ['familyMembers']
+    #     ) = [
+    #         {
+    #             'name': key_field,
+    #             'count': value_field['count']
+    #         }
+    #         for key_field, value_field in (
+    #             file_report_results
+    #             ['xforce_malware_report']
+    #             ['malware']
+    #             ['familyMembers']
+    #             .items()
+    #         )
+    #     ]
 
     print(file_report_results)
 

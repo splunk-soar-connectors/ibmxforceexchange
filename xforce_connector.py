@@ -13,14 +13,17 @@
 # --
 
 import datetime
-from phantom.action_result import ActionResult
+import sys
+from urllib.parse import urlparse
+
 import phantom.app as phantom
+from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
-from urlparse import urlparse
+
 from xforce import xforce
 
 
-class xforce_connector(BaseConnector):
+class XforceConnector(BaseConnector):
 
     def initialize(self):
         return phantom.APP_SUCCESS
@@ -141,12 +144,6 @@ class xforce_connector(BaseConnector):
         try:
             whois_results = xf.get_whois(param['query_value'])
         except Exception as err:
-            return self.set_status_save_progress(
-                phantom.APP_ERROR,
-                'Error running IBM X_Force WHOIS. Details:' + err.message
-            )
-
-        if 'xforce_whois' not in whois_results:
             return self.set_status_save_progress(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force WHOIS. Details:' + err.message
@@ -539,9 +536,7 @@ class xforce_connector(BaseConnector):
                 + err.message
             )
 
-
         if file_report_results['xforce_malware_report'].get('error') is not None:
-
             summary = {
                 'risk': 'Unkown',
                 'cnc_servers': 0,
@@ -736,3 +731,30 @@ class xforce_connector(BaseConnector):
         action_result.set_status(phantom.APP_SUCCESS)
 
         return action_result.get_status()
+
+
+if __name__ == '__main__':
+
+    import json
+    # import pudb
+    from traceback import format_exc
+
+    # pudb.set_trace()
+
+    if (len(sys.argv) < 2):
+        print('No test json specified as input')
+        sys.exit(0)
+
+    with open(sys.argv[1]) as f:
+        in_json = f.read()
+        in_json = json.loads(in_json)
+        print(json.dumps(in_json, indent=4))
+        connector = XforceConnector()
+        connector.print_progress_message = True
+        try:
+            ret_val = connector.handle_action(json.dumps(in_json))
+        except:
+            print(format_exc())
+        print(json.dumps(json.loads(ret_val), indent=4))
+
+    sys.exit(0)
