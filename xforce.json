@@ -15,6 +15,7 @@
     "min_phantom_version": "5.2.0",
     "python_version": "3",
     "logo": "logo_ibmx-forceexchange.svg",
+    "logo_dark": "logo_ibmx-forceexchange_dark.svg",
     "configuration": {
         "base_url": {
             "description": "X-Force Base URL",
