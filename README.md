@@ -2,13 +2,13 @@
 # IBM XForce
 
 Publisher: AvantGarde Partners  
-Connector Version: 1\.0\.2  
+Connector Version: 1\.1\.0  
 Product Vendor: IBM  
 Product Name: XForce  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 1\.0\.240  
+Minimum Product Version: 5\.2\.0  
 
-This app implements various <b>investigative</b> actions on the <b>IBM XForce</b> device
+This app implements various 'investigative' actions on the 'IBM XForce' device
 
 ### Configuration Variables
 The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a XForce asset in SOAR.
@@ -21,16 +21,16 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **api\-password** |  required  | password | X\-Force API Password
 
 ### Supported Actions  
-[ip reputation](#action-ip-reputation) - Returns IP reputation report\.  
+[ip reputation](#action-ip-reputation) - Returns IP reputation report  
 [domain reputation](#action-domain-reputation) - Returns domain reputation report  
 [whois domain](#action-whois-domain) - Returns WHOIS report  
 [whois ip](#action-whois-ip) - Returns WHOIS report  
-[url reputation](#action-url-reputation) - Returns URL reputation report\.  
-[file reputation](#action-file-reputation) - Returns malware report for a given hash\.  
+[url reputation](#action-url-reputation) - Returns URL reputation report  
+[file reputation](#action-file-reputation) - Returns malware report for a given hash  
 [test connectivity](#action-test-connectivity) - Validates connectivity to XForce  
 
 ## action: 'ip reputation'
-Returns IP reputation report\.
+Returns IP reputation report
 
 Type: **investigate**  
 Read only: **False**
@@ -56,6 +56,8 @@ action\_result\.summary\.latest\_entry | string |
 action\_result\.summary\.subnets | string | 
 action\_result\.summary\.malware\_observed | numeric | 
 action\_result\.summary\.malware\_last\_90 | numeric | 
+summary\.total\_objects | numeric | 
+summary\.total\_objects\_successful | numeric | 
 action\_result\.data\.\*\.xforce\_ip\_report\.score | numeric | 
 action\_result\.data\.\*\.xforce\_ip\_report\.ip | string |  `ip` 
 action\_result\.data\.\*\.xforce\_ip\_report\.reason | string | 
@@ -129,11 +131,13 @@ DATA PATH | TYPE | CONTAINS
 --------- | ---- | --------
 action\_result\.status | string | 
 action\_result\.message | string | 
-action\_result\.parameter\.query\_value | string |  `domain` 
+action\_result\.parameter\.query\_value | string |  `domain`  `url` 
 action\_result\.summary\.score | string | 
 action\_result\.summary\.category | string | 
 action\_result\.summary\.malware\_observed | numeric | 
 action\_result\.summary\.malware\_last\_90 | numeric | 
+summary\.total\_objects | numeric | 
+summary\.total\_objects\_successful | numeric | 
 action\_result\.data\.\*\.xforce\_url\_report\.result\.score | numeric | 
 action\_result\.data\.\*\.xforce\_url\_report\.result\.url | string |  `domain` 
 action\_result\.data\.\*\.xforce\_url\_report\.result\.categoryDescriptions\.\*\.category | string | 
@@ -185,7 +189,7 @@ DATA PATH | TYPE | CONTAINS
 --------- | ---- | --------
 action\_result\.status | string | 
 action\_result\.message | string | 
-action\_result\.parameter\.query\_value | string |  `domain` 
+action\_result\.parameter\.query\_value | string |  `domain`  `url` 
 action\_result\.summary\.registrar\_name | string | 
 action\_result\.summary\.admin\_email | string |  `email` 
 action\_result\.summary\.created\_date | string | 
@@ -193,6 +197,8 @@ action\_result\.summary\.expires\_date | string |
 action\_result\.summary\.registrant\_name | string | 
 action\_result\.summary\.registrant\_organization | string | 
 action\_result\.summary\.registrant\_country | string | 
+summary\.total\_objects | numeric | 
+summary\.total\_objects\_successful | numeric | 
 action\_result\.data\.\*\.xforce\_whois\.expiresDate | string | 
 action\_result\.data\.\*\.xforce\_whois\.contactEmail | string |  `email` 
 action\_result\.data\.\*\.xforce\_whois\.registrarName | string | 
@@ -227,6 +233,8 @@ action\_result\.summary\.expires\_date | string |
 action\_result\.summary\.registrant\_name | string | 
 action\_result\.summary\.registrant\_organization | string | 
 action\_result\.summary\.registrant\_country | string | 
+summary\.total\_objects | numeric | 
+summary\.total\_objects\_successful | numeric | 
 action\_result\.data\.\*\.xforce\_whois\.expiresDate | string | 
 action\_result\.data\.\*\.xforce\_whois\.contactEmail | string |  `email` 
 action\_result\.data\.\*\.xforce\_whois\.registrarName | string | 
@@ -238,7 +246,7 @@ action\_result\.data\.\*\.xforce\_whois\.contact\.\*\.name | string |
 action\_result\.data\.\*\.xforce\_whois\.contact\.\*\.country | string |   
 
 ## action: 'url reputation'
-Returns URL reputation report\.
+Returns URL reputation report
 
 Type: **investigate**  
 Read only: **False**
@@ -260,6 +268,8 @@ action\_result\.summary\.score | string |
 action\_result\.summary\.category | string | 
 action\_result\.summary\.malware\_observed | numeric | 
 action\_result\.summary\.malware\_last\_90 | numeric | 
+summary\.total\_objects | numeric | 
+summary\.total\_objects\_successful | numeric | 
 action\_result\.data\.\*\.xforce\_url\_report\.result\.score | numeric | 
 action\_result\.data\.\*\.xforce\_url\_report\.result\.url | string |  `url` 
 action\_result\.data\.\*\.xforce\_url\_report\.result\.categoryDescriptions\.\*\.category | string | 
@@ -296,7 +306,7 @@ action\_result\.data\.\*\.xforce\_dns\.Passive\.records\.\*\.first | string |
 action\_result\.data\.\*\.xforce\_dns\.Passive\.records\.\*\.last | string |   
 
 ## action: 'file reputation'
-Returns malware report for a given hash\.
+Returns malware report for a given hash
 
 Type: **investigate**  
 Read only: **False**
@@ -318,6 +328,8 @@ action\_result\.summary\.email\_sources | numeric |
 action\_result\.summary\.email\_subjects | numeric | 
 action\_result\.summary\.download\_sources | numeric | 
 action\_result\.summary\.family | string | 
+summary\.total\_objects | numeric | 
+summary\.total\_objects\_successful | numeric | 
 action\_result\.data\.\*\.xforce\_malware\_report\.malware\.type | string | 
 action\_result\.data\.\*\.xforce\_malware\_report\.malware\.md5 | string |  `md5` 
 action\_result\.data\.\*\.xforce\_malware\_report\.malware\.hash | string |  `hash` 
