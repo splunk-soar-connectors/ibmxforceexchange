@@ -1,10 +1,10 @@
 [comment]: # "Auto-generated SOAR connector documentation"
-# IBM XForce
+# IBM X-Force Exchange
 
 Publisher: AvantGarde Partners  
 Connector Version: 1\.1\.0  
 Product Vendor: IBM  
-Product Name: XForce  
+Product Name: IBM X-Force Exchange
 Product Version Supported (regex): "\.\*"  
 Minimum Product Version: 5\.2\.0  
 
