@@ -1,17 +1,17 @@
 [comment]: # "Auto-generated SOAR connector documentation"
-# IBM XForce
+# IBM X\-Force Exchange
 
 Publisher: AvantGarde Partners  
 Connector Version: 1\.1\.0  
 Product Vendor: IBM  
-Product Name: XForce  
+Product Name: IBM X\-Force Exchange  
 Product Version Supported (regex): "\.\*"  
 Minimum Product Version: 5\.2\.0  
 
-This app implements various 'investigative' actions on the 'IBM XForce' device
+This app implements various 'investigative' actions on the 'IBM X\-Force Exchange' device
 
 ### Configuration Variables
-The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a XForce asset in SOAR.
+The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a IBM X\-Force Exchange asset in SOAR.
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
