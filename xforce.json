@@ -5,6 +5,7 @@
     "publisher": "AvantGarde Partners",
     "package_name": "phantom_ibmx-forceexchange",
     "type": "investigative",
+    "license": "Copyright (c) AvantGarde Partners 2017",
     "copyright": "Copyright (c) AvantGarde Partners 2017",
     "main_module": "xforce_connector.py",
     "app_version": "1.1.0",
