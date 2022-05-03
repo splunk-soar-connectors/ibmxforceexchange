@@ -3,7 +3,7 @@
     "name": "IBM X-Force Exchange",
     "description": "This app implements various 'investigative' actions on the 'IBM X-Force Exchange' device",
     "publisher": "AvantGarde Partners",
-    "package_name": "phantom_ibmx-forceexchange",
+    "package_name": "phantom_ibmxforceexchange",
     "type": "investigative",
     "license": "Copyright (c) AvantGarde Partners 2017",
     "copyright": "Copyright (c) AvantGarde Partners 2017",
@@ -15,8 +15,8 @@
     "product_version_regex": ".*",
     "min_phantom_version": "5.2.0",
     "python_version": "3",
-    "logo": "logo_ibmx-forceexchange.svg",
-    "logo_dark": "logo_ibmx-forceexchange_dark.svg",
+    "logo": "logo_ibmxforceexchange.svg",
+    "logo_dark": "logo_ibmxforceexchange_dark.svg",
     "configuration": {
         "base_url": {
             "description": "X-Force Base URL",
