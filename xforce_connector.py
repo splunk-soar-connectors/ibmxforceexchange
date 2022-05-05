@@ -228,31 +228,58 @@ class XforceConnector(BaseConnector):
                    }
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results, ['xforce_ip_report', 'history', 'categoryDescriptions'], 'category', 'description')
+            ip_report_results,
+            ['xforce_ip_report', 'history', 'categoryDescriptions'],
+            'category', 'description'
+        )
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results, ['xforce_ip_report', 'history', 'cats'], 'category', 'percentage')
+            ip_report_results,
+            ['xforce_ip_report', 'history', 'cats'],
+            'category', 'percentage'
+        )
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results, ['xforce_ip_report', 'categoryDescriptions'], 'category', 'description')
+            ip_report_results,
+            ['xforce_ip_report', 'categoryDescriptions'],
+            'category', 'description'
+        )
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results, ['xforce_ip_report', 'cats'], 'category', 'percentage')
+            ip_report_results,
+            ['xforce_ip_report', 'cats'],
+            'category', 'percentage'
+        )
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results, ['xforce_ip_report', 'subnets', 'categoryDescriptions'], 'category', 'description')
+            ip_report_results,
+            ['xforce_ip_report', 'subnets', 'categoryDescriptions'],
+            'category', 'description'
+        )
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results, ['xforce_ip_malware', 'malware', 'family'], None, 'name')
+            ip_report_results,
+            ['xforce_ip_malware', 'malware', 'family'],
+            None, 'name'
+        )
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results, ['xforce_dns', 'A'], None, 'record')
+            ip_report_results,
+            ['xforce_dns', 'A'],
+            None, 'record'
+        )
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results, ['xforce_dns', 'AAAA'], None, 'record')
+            ip_report_results,
+            ['xforce_dns', 'AAAA'],
+            None, 'record'
+        )
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results, ['xforce_dns', 'TXT'], None, 'record')
+            ip_report_results,
+            ['xforce_dns', 'TXT'],
+            None, 'record'
+        )
 
         action_result.update_summary(summary)
         action_result.add_data(ip_report_results)
