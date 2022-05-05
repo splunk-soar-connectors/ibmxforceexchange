@@ -126,9 +126,8 @@ class XforceConnector(BaseConnector):
             if 'xforce_dns' not in dns_report:
                 return self.set_status_save_progress(
                     phantom.APP_ERROR,
-                    'Error connecting to IBM X_Force. Details: '
-                    'Unexpected data in X_Force DNS report _ '
-                    + str(dns_report)
+                    'Error connecting to IBM X_Force. Details: Unexpected data in X_Force DNS report _ ' + str(
+                        dns_report)
                 )
             else:
                 return self.set_status_save_progress(
@@ -197,168 +196,63 @@ class XforceConnector(BaseConnector):
         try:
             ip_malware_results = xf.get_ip_malware(param['ip'])
         except Exception as err:
-            return self.set_status_save_progress(
-                phantom.APP_ERROR,
-                'Error running IBM X_Force IP Malware report. Details: '
-                + err.message
-            )
+            return self.set_status_save_progress(phantom.APP_ERROR,
+                                                 'Error running IBM X_Force IP Malware report. Details: ' + err.message)
 
         ip_report_results.update(ip_malware_results)
 
         try:
             dns_results = xf.get_dns(param['ip'])
         except Exception as err:
-            return self.set_status_save_progress(
-                phantom.APP_ERROR,
-                'Error running IBM X_Force DNS report. Details: '
-                + err.message
-            )
+            return self.set_status_save_progress(phantom.APP_ERROR,
+                                                 'Error running IBM X_Force DNS report. Details: ' + err.message)
 
         ip_report_results.update(dns_results)
 
-        summary = {
-            'score':
-                (
-                    ip_report_results
-                    ['xforce_ip_report']
-                    ['score']
-                ),
-            'reason':
-                (
-                    ip_report_results
-                    ['xforce_ip_report']
-                    ['reasonDescription']
-                ),
-            'category':
-                ', '.join([
-                    cat + '('
-                    + str(
-                        ip_report_results
-                        ['xforce_ip_report']
-                        ['cats']
-                        [cat]
-                    )
-                    + ')'
-                    for cat
-                    in (
-                        ip_report_results
-                        ['xforce_ip_report']
-                        ['categoryDescriptions']
-                    )
-                ]),
-            'country':
-                (
-                    ip_report_results
-                    ['xforce_ip_report']
-                    ['geo']
-                    ['country']
-                ),
-            'earliest_entry':
-                (
-                    ip_report_results
-                    ['xforce_ip_report']
-                    ['history']
-                    [0]
-                    ['created']
-                ),
-            'latest_entry':
-                (
-                    ip_report_results
-                    ['xforce_ip_report']
-                    ['history']
-                    [
-                        len(
-                            ip_report_results
-                            ['xforce_ip_report']
-                            ['history']
-                        )-1
-                    ]
-                    ['created']
-                ),
-            'subnets':
-                ','.join([
-                    subnet['subnet'] for subnet in (
-                        ip_report_results
-                        ['xforce_ip_report']
-                        ['subnets']
-                    )
-                ]),
-            'malware_observed':
-                len(
-                    ip_report_results['xforce_ip_malware'].get('malware')
-                    or []
-                ),
-            'malware_last_90':
-                0 if 'error' in ip_report_results['xforce_ip_malware']
-                else
-                len([
-                    malware for malware
-                    in ip_report_results['xforce_ip_malware']['malware']
-                    if (
-                        datetime.date.today()
-                        - datetime.timedelta(days=-100000)
-                    )
-                    <= datetime.datetime.strptime(
-                        malware['lastseen'],
-                        '%Y-%m-%dT%H:%M:%SZ'
-                    ).date()
-                ])
-
-        }
+        summary = {'score': (ip_report_results['xforce_ip_report']['score']),
+                   'reason': (ip_report_results['xforce_ip_report']['reasonDescription']),
+                   'category': ', '.join(
+                       [cat + '(' + str(ip_report_results['xforce_ip_report']['cats'][cat]) + ')' for cat in
+                        (ip_report_results['xforce_ip_report']['categoryDescriptions'])]),
+                   'country': (ip_report_results['xforce_ip_report']['geo']['country']),
+                   'earliest_entry': (ip_report_results['xforce_ip_report']['history'][0]['created']),
+                   'latest_entry': (ip_report_results['xforce_ip_report']['history'][
+                       len(ip_report_results['xforce_ip_report']['history']) - 1]['created']),
+                   'subnets': ','.join(
+                       [subnet['subnet'] for subnet in (ip_report_results['xforce_ip_report']['subnets'])]),
+                   'malware_observed': len(ip_report_results['xforce_ip_malware'].get('malware') or []),
+                   'malware_last_90': 0 if 'error' in ip_report_results['xforce_ip_malware'] else len(
+                       [malware for malware in ip_report_results['xforce_ip_malware']['malware'] if
+                        (datetime.date.today() - datetime.timedelta(days=-100000)) <= datetime.datetime.strptime(
+                            malware['lastseen'], '%Y-%m-%dT%H:%M:%SZ').date()])
+                   }
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results,
-            ['xforce_ip_report', 'history', 'categoryDescriptions'],
-            'category', 'description'
-        )
+            ip_report_results, ['xforce_ip_report', 'history', 'categoryDescriptions'], 'category', 'description')
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results,
-            ['xforce_ip_report', 'history', 'cats'],
-            'category', 'percentage'
-        )
+            ip_report_results, ['xforce_ip_report', 'history', 'cats'], 'category', 'percentage')
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results,
-            ['xforce_ip_report', 'categoryDescriptions'],
-            'category', 'description'
-        )
+            ip_report_results, ['xforce_ip_report', 'categoryDescriptions'], 'category', 'description')
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results,
-            ['xforce_ip_report', 'cats'],
-            'category', 'percentage'
-        )
+            ip_report_results, ['xforce_ip_report', 'cats'], 'category', 'percentage')
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results,
-            ['xforce_ip_report', 'subnets', 'categoryDescriptions'],
-            'category', 'description'
-        )
+            ip_report_results, ['xforce_ip_report', 'subnets', 'categoryDescriptions'], 'category', 'description')
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results,
-            ['xforce_ip_malware', 'malware', 'family'],
-            None, 'name'
-        )
+            ip_report_results, ['xforce_ip_malware', 'malware', 'family'], None, 'name')
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results,
-            ['xforce_dns', 'A'],
-            None, 'record'
-        )
+            ip_report_results, ['xforce_dns', 'A'], None, 'record')
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results,
-            ['xforce_dns', 'AAAA'],
-            None, 'record'
-        )
+            ip_report_results, ['xforce_dns', 'AAAA'], None, 'record')
 
         ip_report_results = self._cleanup_dict(
-            ip_report_results,
-            ['xforce_dns', 'TXT'],
-            None, 'record'
-        )
+            ip_report_results, ['xforce_dns', 'TXT'], None, 'record')
 
         action_result.update_summary(summary)
         action_result.add_data(ip_report_results)
@@ -382,10 +276,8 @@ class XforceConnector(BaseConnector):
         try:
             url_report_results = xf.get_url_report(param['query_value'])
         except Exception as err:
-            return self.set_status_save_progress(
-                phantom.APP_ERROR,
-                'Error running IBM X_Force url Report. Details:' + err.message
-            )
+            return self.set_status_save_progress(phantom.APP_ERROR,
+                                                 'Error running IBM X_Force url Report. Details:' + err.message)
 
         if url_report_results['xforce_url_report'].get('error') is not None:
             summary = {
@@ -397,21 +289,14 @@ class XforceConnector(BaseConnector):
 
             action_result.update_summary(summary)
 
-            return (
-                action_result.set_status(
-                    phantom.APP_SUCCESS,
-                    'No data found.'
-                )
-            )
+            return (action_result.set_status(phantom.APP_SUCCESS, 'No data found.'))
 
         try:
             url_malware_results = xf.get_url_malware(param['query_value'])
         except Exception as err:
             return self.set_status_save_progress(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force url Malware report. Details: '
-                + err.message
-            )
+                'Error running IBM X_Force url Malware report. Details: ' + err.message)
 
         url_report_results.update(url_malware_results)
 
@@ -420,60 +305,25 @@ class XforceConnector(BaseConnector):
         except Exception as err:
             return self.set_status_save_progress(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force DNS report. Details: '
-                + err.message
-            )
+                'Error running IBM X_Force DNS report. Details: ' + err.message)
 
         url_report_results.update(dns_results)
 
-        summary = {
-            'score':
-                (
-                    url_report_results
-                    ['xforce_url_report']
-                    ['result']
-                    ['score']
-                ),
-            'category':
-                ','.join([
-                    cat for cat
-                    in (
-                        url_report_results
-                        ['xforce_url_report']
-                        ['result']
-                        ['categoryDescriptions']
-                    )
-                ]),
-            'malware_observed':
-                url_report_results['xforce_url_malware'].get('count', 0),
-            'malware_in_last_90':
-                0 if 'error' in url_report_results['xforce_url_malware']
-                else
-                len([
-                    malware for malware
-                    in url_report_results['xforce_url_malware']['malware']
-                    if (
-                        datetime.date.today()
-                        - datetime.timedelta(days=90)
-                    )
-                    <= datetime.datetime.strptime(
-                        malware['lastseen'],
-                        '%Y-%m-%dT%H:%M:%SZ'
-                    ).date()
-                ])
-        }
+        summary = {'score': (url_report_results['xforce_url_report']['result']['score']),
+                   'category': ','.join(
+                       [cat for cat in (url_report_results['xforce_url_report']['result']['categoryDescriptions'])]),
+                   'malware_observed': url_report_results['xforce_url_malware'].get('count', 0),
+                   'malware_in_last_90': 0 if 'error' in url_report_results['xforce_url_malware'] else len(
+                       [malware for malware in url_report_results['xforce_url_malware']['malware'] if
+                        (datetime.date.today() - datetime.timedelta(days=90)) <= datetime.datetime.strptime(
+                            malware['lastseen'], '%Y-%m-%dT%H:%M:%SZ').date()])
+                   }
 
         url_report_results = self._cleanup_dict(
-            url_report_results,
-            ['xforce_url_report', 'result', 'categoryDescriptions'],
-            'category', 'description'
-        )
+            url_report_results, ['xforce_url_report', 'result', 'categoryDescriptions'], 'category', 'description')
 
         url_report_results = self._cleanup_dict(
-            url_report_results,
-            ['xforce_url_report', 'result', 'cats'],
-            'category', 'is_cat'
-        )
+            url_report_results, ['xforce_url_report', 'result', 'cats'], 'category', 'is_cat')
 
         url_report_results = self._cleanup_dict(
             url_report_results,
@@ -532,8 +382,7 @@ class XforceConnector(BaseConnector):
         except Exception as err:
             return self.set_status_save_progress(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force file report. Details:'
-                + err.message
+                'Error running IBM X_Force file report. Details:' + err.message
             )
 
         if file_report_results['xforce_malware_report'].get('error') is not None:
@@ -642,51 +491,19 @@ class XforceConnector(BaseConnector):
                 .get('rows', [])
             )
         )
-
+        family_reports = [family for family in (((file_report_results['xforce_malware_report'].get('malware') or {
+            'origins': None}).get('origins') or {'family': None}).get('family', []))]
+        family_dicts = [family + '(' + str(family_dict.get('count', 0)) + ')' for family, family_dict in (
+            (file_report_results['xforce_malware_report'].get('malware') or {'familyMembers': None}).get(
+                'familyMembers', {}).items())]
         summary = {
-            'risk':
-                (
-                    (
-                        file_report_results
-                        ['xforce_malware_report']
-                        .get('malware') or {'risk': 'Unknown'}
-                    )
-                    .get('risk', 'Unknown')
-                ),
+            'risk': ((file_report_results['xforce_malware_report'].get('malware') or {'risk': 'Unknown'}).get('risk',
+                                                                                                              'Unknown')),
             'cnc_servers': cnc_server_count,
             'email_sources': email_source_count,
             'email_subjects': email_subject_count,
             'download_sources': download_source_count,
-            'family':
-                ','.join(
-                    [
-                        family for family in (
-                            (
-                                (
-                                    file_report_results
-                                    ['xforce_malware_report']
-                                    .get('malware') or {'origins': None}
-                                )
-                                .get('origins') or {'family': None}
-                            )
-                            .get('family', [])
-                        )
-                    ]
-                    +
-                    [
-                        family
-                        + '(' + str(family_dict.get('count', 0)) + ')'
-                        for family, family_dict in (
-                            (
-                                file_report_results
-                                ['xforce_malware_report']
-                                .get('malware') or {'familyMembers': None}
-                            )
-                            .get('familyMembers', {}).items()
-                        )
-                    ]
-
-                )
+            'family': ','.join(family_reports + family_dicts)
         }
 
         file_report_results = self._cleanup_dict(
