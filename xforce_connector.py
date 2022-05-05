@@ -347,10 +347,16 @@ class XforceConnector(BaseConnector):
                    }
 
         url_report_results = self._cleanup_dict(
-            url_report_results, ['xforce_url_report', 'result', 'categoryDescriptions'], 'category', 'description')
+            url_report_results,
+            ['xforce_url_report', 'result', 'categoryDescriptions'],
+            'category', 'description'
+        )
 
         url_report_results = self._cleanup_dict(
-            url_report_results, ['xforce_url_report', 'result', 'cats'], 'category', 'is_cat')
+            url_report_results,
+            ['xforce_url_report', 'result', 'cats'],
+            'category', 'is_cat'
+        )
 
         url_report_results = self._cleanup_dict(
             url_report_results,
