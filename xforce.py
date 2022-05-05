@@ -31,11 +31,7 @@ class xforce(object):
         self.api_password = api_password
         self.auth_token = api_key + ':' + api_password
         self.header = {
-            'Authorization': (
-                'Basic '
-                + base64.b64encode(self.auth_token.encode('utf-8'))
-                .decode('utf-8')
-            )
+            'Authorization': ('Basic ' + base64.b64encode(self.auth_token.encode('utf-8')).decode('utf-8'))
         }
         self.verify_cert = verify_cert
 
@@ -63,15 +59,10 @@ class xforce(object):
             )
         except requests.exceptions.HTTPError as err:
             raise Exception(
-                'Error calling - ' + url + ' - \n'
-                'HTTP Status: ' + r.status
-                + 'Reason: ' + r.reason
-                + 'Details: ' + str(err)
-            )
+                'Error calling - ' + url + ' - \n' + 'HTTP Status: ' + r.status + 'Reason: ' + r.reason + 'Details: ' + str(
+                    err))
         except requests.exceptions.RequestException as err:
-            raise Exception(
-                'Error calling - ' + url + ' - Details: ' + str(err)
-            )
+            raise Exception('Error calling - ' + url + ' - Details: ' + str(err))
 
         try:
             results = r.json()
