@@ -38,6 +38,7 @@ def whois(self, param):
         'registrant_country':
             registrant[0].get('country', '')
     }
+    print('summary: %s' % summary)
 
     raise Exception
 
