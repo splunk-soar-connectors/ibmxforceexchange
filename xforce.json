@@ -8,7 +8,7 @@
     "license": "Copyright (c) AvantGarde Partners 2017",
     "copyright": "Copyright (c) AvantGarde Partners 2017",
     "main_module": "xforce_connector.py",
-    "app_version": "1.1.1",
+    "app_version": "1.1.0",
     "utctime_updated": "2022-01-07T20:46:01.000000Z",
     "product_vendor": "IBM",
     "product_name": "IBM X-Force Exchange",
