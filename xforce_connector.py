@@ -48,7 +48,7 @@ class XforceConnector(BaseConnector):
         action_id = self.get_action_identifier()
 
         supported_actions = {
-            'test connectivity': self._test_connectivity,
+            'test_asset_connectivity': self._test_connectivity,
             'ip reputation': self.ip_reputation,
             'whois ip': self.whois,
             'whois domain': self.whois,
@@ -132,7 +132,7 @@ class XforceConnector(BaseConnector):
             else:
                 return self.set_status_save_progress(
                     phantom.APP_SUCCESS,
-                    'Successfully connected to IBM X_Force API.'
+                    'Test connectivity passed'
                 )
 
     def whois(self, param, action_id):
@@ -602,7 +602,7 @@ if __name__ == '__main__':
         connector = XforceConnector()
         connector.print_progress_message = True
         try:
-            ret_val = connector.handle_action(json.dumps(in_json))
+            ret_val = connector._handle_action(json.dumps(in_json), None)
         except:
             print(format_exc())
         print(json.dumps(json.loads(ret_val), indent=4))
