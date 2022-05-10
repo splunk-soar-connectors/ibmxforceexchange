@@ -403,7 +403,7 @@
             "description": "Returns domain reputation report",
             "verbose": "Runs the X-Force URL Report and URL Malware Report (both of which accept domains), and DNS Lookup.",
             "type": "investigate",
-            "identifier": "domain reputation",
+            "identifier": "domain_reputation",
             "read_only": false,
             "parameters": {
                 "query_value": {

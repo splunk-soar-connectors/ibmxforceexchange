@@ -52,7 +52,7 @@ class XforceConnector(BaseConnector):
             'ip reputation': self.ip_reputation,
             'whois ip': self.whois,
             'whois domain': self.whois,
-            'domain reputation': self.url_reputation,
+            'domain_reputation': self.url_reputation,
             'url reputation': self.url_reputation,
             'file reputation': self.file_reputation
         }
