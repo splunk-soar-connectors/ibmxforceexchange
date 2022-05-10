@@ -51,7 +51,7 @@
             "description": "Returns IP reputation report",
             "verbose": "Runs the X-Force IP Report, IP Malware Report, and DNS Lookup.",
             "type": "investigate",
-            "identifier": "ip reputation",
+            "identifier": "ip_reputation",
             "read_only": false,
             "parameters": {
                 "ip": {

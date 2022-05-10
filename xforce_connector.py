@@ -49,7 +49,7 @@ class XforceConnector(BaseConnector):
 
         supported_actions = {
             'test_asset_connectivity': self._test_connectivity,
-            'ip reputation': self.ip_reputation,
+            'ip_reputation': self.ip_reputation,
             'whois ip': self.whois,
             'whois domain': self.whois,
             'domain_reputation': self.url_reputation,
