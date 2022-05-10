@@ -130,10 +130,8 @@ class XforceConnector(BaseConnector):
                         dns_report)
                 )
             else:
-                return self.set_status_save_progress(
-                    phantom.APP_SUCCESS,
-                    'Test connectivity passed'
-                )
+                self.save_progress('Test connectivity passed')
+                return self.set_status(phantom.APP_SUCCESS)
 
     def whois(self, param, action_id):
         xf = self._initialize_xforce()
