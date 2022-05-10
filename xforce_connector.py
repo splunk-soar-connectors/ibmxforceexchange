@@ -176,6 +176,8 @@ class XforceConnector(BaseConnector):
         return action_result.get_status()
 
     def ip_reputation(self, param, action_id):
+        self.debug_print('Start ip_reputation')
+
         xf = self._initialize_xforce()
         ip_report_results = None
         ip_malware_results = None
@@ -282,6 +284,8 @@ class XforceConnector(BaseConnector):
         action_result.update_summary(summary)
         action_result.add_data(ip_report_results)
         action_result.set_status(phantom.APP_SUCCESS)
+
+        self.debug_print('Done ip_reputation')
 
         return action_result.get_status()
 
