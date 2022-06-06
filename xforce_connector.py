@@ -119,6 +119,8 @@ class XforceConnector(BaseConnector):
             # work, as long as x_force is rechable. Report will just
             # have no info in it.
             dns_report = xf.get_dns('google.com')
+            self.debug_print('dns_report: %s' % dns_report)
+
         except Exception as err:
             return self.set_status_save_progress(
                 phantom.APP_ERROR,
@@ -131,10 +133,10 @@ class XforceConnector(BaseConnector):
                     'Error connecting to IBM X_Force. Details: Unexpected data in X_Force DNS report _ ' + str(
                         dns_report)
                 )
-            else:
-                self.save_progress('Test connectivity passed')
-                self.debug_print('Test connectivity passed')
-                return self.set_status(phantom.APP_SUCCESS)
+
+            self.save_progress('Test connectivity passed')
+            self.debug_print('Test connectivity passed')
+            return self.set_status(phantom.APP_SUCCESS)
 
     def whois(self, param, action_id):
         xf = self._initialize_xforce()
