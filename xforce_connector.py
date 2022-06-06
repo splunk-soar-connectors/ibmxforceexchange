@@ -53,8 +53,8 @@ class XforceConnector(BaseConnector):
             'whois ip': self.whois,
             'whois domain': self.whois,
             'domain_reputation': self.url_reputation,
-            'url reputation': self.url_reputation,
-            'file reputation': self.file_reputation
+            'url_reputation': self.url_reputation,
+            'file_reputation': self.file_reputation
         }
 
         run_action = supported_actions[action_id]

@@ -943,7 +943,7 @@
             "description": "Returns URL reputation report",
             "verbose": "Runs the X-Force URL Report, URL Malware Report, and DNS Lookup.",
             "type": "investigate",
-            "identifier": "url reputation",
+            "identifier": "url_reputation",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -1188,7 +1188,7 @@
             "action": "file reputation",
             "description": "Returns malware report for a given hash",
             "type": "investigate",
-            "identifier": "file reputation",
+            "identifier": "file_reputation",
             "read_only": false,
             "parameters": {
                 "hash": {
