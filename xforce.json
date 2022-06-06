@@ -650,7 +650,7 @@
             "action": "whois domain",
             "description": "Returns WHOIS report",
             "type": "investigate",
-            "identifier": "whois domain",
+            "identifier": "whois_domain",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -797,7 +797,7 @@
             "action": "whois ip",
             "description": "Returns WHOIS report",
             "type": "investigate",
-            "identifier": "whois ip",
+            "identifier": "whois_ip",
             "read_only": false,
             "parameters": {
                 "query_value": {
