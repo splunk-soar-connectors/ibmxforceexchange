@@ -50,9 +50,9 @@ class XforceConnector(BaseConnector):
         supported_actions = {
             'test_asset_connectivity': self._test_connectivity,
             'ip_reputation': self.ip_reputation,
-            'whois_ip': self.whois,
-            'whois_domain': self.whois,
-            'domain_reputation': self.url_reputation,
+            'whois_ip': self.handle_whois_ip,
+            'whois_domain': self.handle_whois_domain,
+            'domain_reputation': self.domain_reputation,
             'url_reputation': self.url_reputation,
             'file_reputation': self.file_reputation
         }
@@ -180,6 +180,18 @@ class XforceConnector(BaseConnector):
 
         return action_result.get_status()
 
+    def handle_whois_ip(self, param, action_id):
+        self.debug_print('Started whois_ip with param %s' % param)
+        res = self.whois(param, action_id)
+        self.debug_print('Done whois_ip with param %s' % param)
+        return res
+
+    def handle_whois_domain(self, param, action_id):
+        self.debug_print('Started whois_domain with param %s' % param)
+        res = self.whois(param, action_id)
+        self.debug_print('Done whois_domain with param %s' % param)
+        return res
+
     def ip_reputation(self, param, action_id):
         self.debug_print('Start ip_reputation')
 
@@ -293,6 +305,12 @@ class XforceConnector(BaseConnector):
         self.debug_print('Done ip_reputation')
 
         return action_result.get_status()
+
+    def domain_reputation(self, param, action_id):
+        self.debug_print('Started domain_reputation with param %s' % param)
+        res = self.url_reputation(param, action_id)
+        self.debug_print('Done domain_reputation with param %s' % param)
+        return res
 
     def url_reputation(self, param, action_id):
         self.debug_print('Started url_reputation with action id %s and param %s' % (action_id, param))
