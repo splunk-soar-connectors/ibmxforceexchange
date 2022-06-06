@@ -110,6 +110,8 @@ class XforceConnector(BaseConnector):
         return results_dict
 
     def _test_connectivity(self, param, action_id):
+        self.debug_print('Started _test_connectivity with param %s' % param)
+
         xf = self._initialize_xforce()
 
         try:
@@ -131,6 +133,7 @@ class XforceConnector(BaseConnector):
                 )
             else:
                 self.save_progress('Test connectivity passed')
+                self.debug_print('Test connectivity passed')
                 return self.set_status(phantom.APP_SUCCESS)
 
     def whois(self, param, action_id):
@@ -290,6 +293,8 @@ class XforceConnector(BaseConnector):
         return action_result.get_status()
 
     def url_reputation(self, param, action_id):
+        self.debug_print('Started url_reputation with action id %s and param %s' % (action_id, param))
+
         xf = self._initialize_xforce()
         url_report_results = None
         url_malware_results = None
@@ -400,9 +405,11 @@ class XforceConnector(BaseConnector):
         action_result.add_data(url_report_results)
         action_result.set_status(phantom.APP_SUCCESS)
 
+        self.debug_print('Done url_reputation with param %s' % param)
         return action_result.get_status()
 
     def file_reputation(self, param, action_id):
+        self.debug_print('Started file_reputation with param %s' % param)
 
         xf = self._initialize_xforce()
         file_report_results = None
@@ -581,6 +588,8 @@ class XforceConnector(BaseConnector):
         action_result.update_summary(summary)
         action_result.add_data(file_report_results)
         action_result.set_status(phantom.APP_SUCCESS)
+
+        self.debug_print('Done file_reputation with param %s' % param)
 
         return action_result.get_status()
 
