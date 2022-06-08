@@ -2,7 +2,7 @@
 # IBM X\-Force Exchange
 
 Publisher: AvantGarde Partners  
-Connector Version: 1\.1\.0  
+Connector Version: 1\.1\.1  
 Product Vendor: IBM  
 Product Name: IBM X\-Force Exchange  
 Product Version Supported (regex): "\.\*"  
