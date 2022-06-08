@@ -50,7 +50,7 @@
             "description": "Returns IP reputation report",
             "verbose": "Runs the X-Force IP Report, IP Malware Report, and DNS Lookup.",
             "type": "investigate",
-            "identifier": "ip reputation",
+            "identifier": "ip_reputation",
             "read_only": false,
             "parameters": {
                 "ip": {
@@ -403,7 +403,7 @@
             "description": "Returns domain reputation report",
             "verbose": "Runs the X-Force URL Report and URL Malware Report (both of which accept domains), and DNS Lookup.",
             "type": "investigate",
-            "identifier": "domain reputation",
+            "identifier": "domain_reputation",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -650,7 +650,7 @@
             "action": "whois domain",
             "description": "Returns WHOIS report",
             "type": "investigate",
-            "identifier": "whois domain",
+            "identifier": "whois_domain",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -797,7 +797,7 @@
             "action": "whois ip",
             "description": "Returns WHOIS report",
             "type": "investigate",
-            "identifier": "whois ip",
+            "identifier": "whois_ip",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -943,7 +943,7 @@
             "description": "Returns URL reputation report",
             "verbose": "Runs the X-Force URL Report, URL Malware Report, and DNS Lookup.",
             "type": "investigate",
-            "identifier": "url reputation",
+            "identifier": "url_reputation",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -1188,7 +1188,7 @@
             "action": "file reputation",
             "description": "Returns malware report for a given hash",
             "type": "investigate",
-            "identifier": "file reputation",
+            "identifier": "file_reputation",
             "read_only": false,
             "parameters": {
                 "hash": {
@@ -1571,7 +1571,7 @@
             "action": "test connectivity",
             "description": "Validates connectivity to XForce",
             "type": "test",
-            "identifier": "test connectivity",
+            "identifier": "test_asset_connectivity",
             "read_only": true,
             "parameters": {},
             "output": [],
@@ -1582,7 +1582,7 @@
         "wheel": [
             {
                 "module": "certifi",
-                "input_file": "wheels/shared/certifi-2021.10.8-py2.py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2022.5.18.1-py3-none-any.whl"
             },
             {
                 "module": "chardet",
