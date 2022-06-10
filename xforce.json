@@ -2,7 +2,7 @@
     "appid": "653a4735-1eed-4cb9-98c4-b40408e60b22",
     "name": "IBM X-Force Exchange",
     "description": "This app implements various 'investigative' actions on the 'IBM X-Force Exchange' device",
-    "publisher": "AvantGarde Partners",
+    "publisher": "Splunk",
     "package_name": "phantom_ibmxforceexchange",
     "type": "investigative",
     "license": "Copyright (c) AvantGarde Partners 2017",
