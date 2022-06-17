@@ -1,8 +1,8 @@
 [comment]: # "Auto-generated SOAR connector documentation"
 # IBM X\-Force Exchange
 
-Publisher: AvantGarde Partners  
-Connector Version: 1\.1\.0  
+Publisher: Splunk  
+Connector Version: 1\.1\.1  
 Product Vendor: IBM  
 Product Name: IBM X\-Force Exchange  
 Product Version Supported (regex): "\.\*"  

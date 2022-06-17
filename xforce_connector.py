@@ -1,16 +1,18 @@
-# --
 # File: xforce_connector.py
 #
-# Copyright (c) AvantGarde Partners 2017
+# Copyright (c) 2021-2022 Splunk Inc.
 #
-# This unpublished material is proprietary to Avantgarde Partners
-# All rights reserved. The methods and
-# techniques described herein are considered trade secrets
-# and/or confidential. Reproduction or distribution, in whole
-# or in part, is forbidden except by express written permission
-# of Avantgarde Partners.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# --
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
+
 
 import datetime
 import sys
@@ -48,13 +50,13 @@ class XforceConnector(BaseConnector):
         action_id = self.get_action_identifier()
 
         supported_actions = {
-            'test connectivity': self._test_connectivity,
-            'ip reputation': self.ip_reputation,
-            'whois ip': self.whois,
-            'whois domain': self.whois,
-            'domain reputation': self.url_reputation,
-            'url reputation': self.url_reputation,
-            'file reputation': self.file_reputation
+            'test_asset_connectivity': self._test_connectivity,
+            'ip_reputation': self.ip_reputation,
+            'whois_ip': self._handle_whois_ip,
+            'whois_domain': self._handle_whois_domain,
+            'domain_reputation': self._handle_domain_reputation,
+            'url_reputation': self.url_reputation,
+            'file_reputation': self.file_reputation
         }
 
         run_action = supported_actions[action_id]
@@ -110,6 +112,8 @@ class XforceConnector(BaseConnector):
         return results_dict
 
     def _test_connectivity(self, param, action_id):
+        self.debug_print('Started _test_connectivity with param %s' % param)
+
         xf = self._initialize_xforce()
 
         try:
@@ -117,6 +121,8 @@ class XforceConnector(BaseConnector):
             # work, as long as x_force is rechable. Report will just
             # have no info in it.
             dns_report = xf.get_dns('google.com')
+            self.debug_print('dns_report: %s' % dns_report)
+
         except Exception as err:
             return self.set_status_save_progress(
                 phantom.APP_ERROR,
@@ -129,11 +135,10 @@ class XforceConnector(BaseConnector):
                     'Error connecting to IBM X_Force. Details: Unexpected data in X_Force DNS report _ ' + str(
                         dns_report)
                 )
-            else:
-                return self.set_status_save_progress(
-                    phantom.APP_SUCCESS,
-                    'Successfully connected to IBM X_Force API.'
-                )
+
+            self.save_progress('Test connectivity passed')
+            self.debug_print('Test connectivity passed')
+            return self.set_status(phantom.APP_SUCCESS)
 
     def whois(self, param, action_id):
         xf = self._initialize_xforce()
@@ -177,7 +182,21 @@ class XforceConnector(BaseConnector):
 
         return action_result.get_status()
 
+    def _handle_whois_ip(self, param, action_id):
+        self.debug_print('Started whois_ip with param %s' % param)
+        res = self.whois(param, action_id)
+        self.debug_print('Done whois_ip with param %s' % param)
+        return res
+
+    def _handle_whois_domain(self, param, action_id):
+        self.debug_print('Started whois_domain with param %s' % param)
+        res = self.whois(param, action_id)
+        self.debug_print('Done whois_domain with param %s' % param)
+        return res
+
     def ip_reputation(self, param, action_id):
+        self.debug_print('Start ip_reputation')
+
         xf = self._initialize_xforce()
         ip_report_results = None
         ip_malware_results = None
@@ -285,9 +304,19 @@ class XforceConnector(BaseConnector):
         action_result.add_data(ip_report_results)
         action_result.set_status(phantom.APP_SUCCESS)
 
+        self.debug_print('Done ip_reputation')
+
         return action_result.get_status()
 
+    def _handle_domain_reputation(self, param, action_id):
+        self.debug_print('Started domain_reputation with param %s' % param)
+        res = self.url_reputation(param, action_id)
+        self.debug_print('Done domain_reputation with param %s' % param)
+        return res
+
     def url_reputation(self, param, action_id):
+        self.debug_print('Started url_reputation with action id %s and param %s' % (action_id, param))
+
         xf = self._initialize_xforce()
         url_report_results = None
         url_malware_results = None
@@ -398,9 +427,11 @@ class XforceConnector(BaseConnector):
         action_result.add_data(url_report_results)
         action_result.set_status(phantom.APP_SUCCESS)
 
+        self.debug_print('Done url_reputation with param %s' % param)
         return action_result.get_status()
 
     def file_reputation(self, param, action_id):
+        self.debug_print('Started file_reputation with param %s' % param)
 
         xf = self._initialize_xforce()
         file_report_results = None
@@ -580,6 +611,8 @@ class XforceConnector(BaseConnector):
         action_result.add_data(file_report_results)
         action_result.set_status(phantom.APP_SUCCESS)
 
+        self.debug_print('Done file_reputation with param %s' % param)
+
         return action_result.get_status()
 
 
@@ -602,7 +635,7 @@ if __name__ == '__main__':
         connector = XforceConnector()
         connector.print_progress_message = True
         try:
-            ret_val = connector.handle_action(json.dumps(in_json))
+            ret_val = connector._handle_action(json.dumps(in_json), None)
         except:
             print(format_exc())
         print(json.dumps(json.loads(ret_val), indent=4))

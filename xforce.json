@@ -2,18 +2,19 @@
     "appid": "653a4735-1eed-4cb9-98c4-b40408e60b22",
     "name": "IBM X-Force Exchange",
     "description": "This app implements various 'investigative' actions on the 'IBM X-Force Exchange' device",
-    "publisher": "AvantGarde Partners",
+    "publisher": "Splunk",
     "package_name": "phantom_ibmxforceexchange",
     "type": "investigative",
-    "license": "Copyright (c) AvantGarde Partners 2017",
-    "copyright": "Copyright (c) AvantGarde Partners 2017",
+    "license": "Copyright (c) 2021-2022 Splunk Inc.",
+    "copyright": "Copyright (c) 2021-2022 Splunk Inc.",
     "main_module": "xforce_connector.py",
-    "app_version": "1.1.0",
-    "utctime_updated": "2022-01-07T20:46:01.000000Z",
+    "app_version": "1.1.1",
+    "utctime_updated": "2022-06-08T12:27:25.000000Z",
     "product_vendor": "IBM",
     "product_name": "IBM X-Force Exchange",
     "product_version_regex": ".*",
     "min_phantom_version": "5.2.0",
+    "fips_compliant": false,
     "python_version": "3",
     "logo": "logo_ibmxforceexchange.svg",
     "logo_dark": "logo_ibmxforceexchange_dark.svg",
@@ -50,7 +51,7 @@
             "description": "Returns IP reputation report",
             "verbose": "Runs the X-Force IP Report, IP Malware Report, and DNS Lookup.",
             "type": "investigate",
-            "identifier": "ip reputation",
+            "identifier": "ip_reputation",
             "read_only": false,
             "parameters": {
                 "ip": {
@@ -403,7 +404,7 @@
             "description": "Returns domain reputation report",
             "verbose": "Runs the X-Force URL Report and URL Malware Report (both of which accept domains), and DNS Lookup.",
             "type": "investigate",
-            "identifier": "domain reputation",
+            "identifier": "domain_reputation",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -650,7 +651,7 @@
             "action": "whois domain",
             "description": "Returns WHOIS report",
             "type": "investigate",
-            "identifier": "whois domain",
+            "identifier": "whois_domain",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -797,7 +798,7 @@
             "action": "whois ip",
             "description": "Returns WHOIS report",
             "type": "investigate",
-            "identifier": "whois ip",
+            "identifier": "whois_ip",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -943,7 +944,7 @@
             "description": "Returns URL reputation report",
             "verbose": "Runs the X-Force URL Report, URL Malware Report, and DNS Lookup.",
             "type": "investigate",
-            "identifier": "url reputation",
+            "identifier": "url_reputation",
             "read_only": false,
             "parameters": {
                 "query_value": {
@@ -1188,7 +1189,7 @@
             "action": "file reputation",
             "description": "Returns malware report for a given hash",
             "type": "investigate",
-            "identifier": "file reputation",
+            "identifier": "file_reputation",
             "read_only": false,
             "parameters": {
                 "hash": {
@@ -1571,7 +1572,7 @@
             "action": "test connectivity",
             "description": "Validates connectivity to XForce",
             "type": "test",
-            "identifier": "test connectivity",
+            "identifier": "test_asset_connectivity",
             "read_only": true,
             "parameters": {},
             "output": [],
@@ -1582,7 +1583,7 @@
         "wheel": [
             {
                 "module": "certifi",
-                "input_file": "wheels/shared/certifi-2021.10.8-py2.py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2022.6.15-py3-none-any.whl"
             },
             {
                 "module": "chardet",
