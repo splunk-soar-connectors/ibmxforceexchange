@@ -149,7 +149,7 @@ class XforceConnector(BaseConnector):
         try:
             whois_results = xf.get_whois(param['query_value'])
         except XForceError as err:
-            return self.set_status_save_progress(
+            return action_result.set_status(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force WHOIS.',
                 exception=err,
@@ -209,7 +209,7 @@ class XforceConnector(BaseConnector):
         try:
             ip_report_results = xf.get_ip_report(param['ip'])
         except XForceError as err:
-            return self.set_status_save_progress(
+            return action_result.set_status(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force IP Report.',
                 exception=err,
@@ -218,7 +218,7 @@ class XforceConnector(BaseConnector):
         try:
             ip_malware_results = xf.get_ip_malware(param['ip'])
         except XForceError as err:
-            return self.set_status_save_progress(
+            return action_result.set_status(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force IP Malware report.',
                 exception=err,
@@ -229,7 +229,7 @@ class XforceConnector(BaseConnector):
         try:
             dns_results = xf.get_dns(param['ip'])
         except XForceError as err:
-            return self.set_status_save_progress(
+            return action_result.set_status(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force DNS report.',
                 exception=err,
@@ -341,7 +341,7 @@ class XforceConnector(BaseConnector):
         try:
             url_report_results = xf.get_url_report(param['query_value'])
         except XForceError as err:
-            return self.set_status_save_progress(
+            return action_result.set_status(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force url Report.',
                 exception=err,
@@ -362,7 +362,7 @@ class XforceConnector(BaseConnector):
         try:
             url_malware_results = xf.get_url_malware(param['query_value'])
         except XForceError as err:
-            return self.set_status_save_progress(
+            return action_result.set_status(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force url Malware report.',
                 exception=err,
@@ -373,7 +373,7 @@ class XforceConnector(BaseConnector):
         try:
             dns_results = xf.get_dns(param['query_value'])
         except XForceError as err:
-            return self.set_status_save_progress(
+            return action_result.set_status(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force DNS report.',
                 exception=err,
@@ -460,7 +460,7 @@ class XforceConnector(BaseConnector):
         try:
             file_report_results = xf.get_malware_report(param['hash'])
         except XForceError as err:
-            return self.set_status_save_progress(
+            return action_result.set_status(
                 phantom.APP_ERROR,
                 'Error running IBM X_Force file report.',
                 exception=err,
