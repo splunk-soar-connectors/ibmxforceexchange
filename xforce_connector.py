@@ -126,7 +126,7 @@ class XforceConnector(BaseConnector):
         except XForceError as err:
             return self.set_status_save_progress(
                 phantom.APP_ERROR,
-                'Failed test connectivity.',
+                'Failed test connectivity',
                 exception=err,
             )
         else:
@@ -151,7 +151,7 @@ class XforceConnector(BaseConnector):
         except XForceError as err:
             return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force WHOIS.',
+                'Error running IBM X_Force WHOIS',
                 exception=err,
             )
 
@@ -211,7 +211,7 @@ class XforceConnector(BaseConnector):
         except XForceError as err:
             return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force IP Report.',
+                'Error running IBM X_Force IP Report',
                 exception=err,
             )
 
@@ -220,7 +220,7 @@ class XforceConnector(BaseConnector):
         except XForceError as err:
             return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force IP Malware report.',
+                'Error running IBM X_Force IP Malware report',
                 exception=err,
             )
 
@@ -231,7 +231,7 @@ class XforceConnector(BaseConnector):
         except XForceError as err:
             return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force DNS report.',
+                'Error running IBM X_Force DNS report',
                 exception=err,
             )
 
@@ -343,7 +343,7 @@ class XforceConnector(BaseConnector):
         except XForceError as err:
             return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force url Report.',
+                'Error running IBM X_Force url Report',
                 exception=err,
             )
 
@@ -364,7 +364,7 @@ class XforceConnector(BaseConnector):
         except XForceError as err:
             return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force url Malware report.',
+                'Error running IBM X_Force url Malware report',
                 exception=err,
             )
 
@@ -375,7 +375,7 @@ class XforceConnector(BaseConnector):
         except XForceError as err:
             return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force DNS report.',
+                'Error running IBM X_Force DNS report',
                 exception=err,
             )
 
@@ -462,7 +462,7 @@ class XforceConnector(BaseConnector):
         except XForceError as err:
             return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force file report.',
+                'Error running IBM X_Force file report',
                 exception=err,
             )
 
