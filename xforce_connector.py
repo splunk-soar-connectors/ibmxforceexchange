@@ -22,7 +22,7 @@ import phantom.app as phantom
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
-from xforce import xforce, XForceError
+from xforce import XForceError, xforce
 
 
 class XforceConnector(BaseConnector):
