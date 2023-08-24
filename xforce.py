@@ -20,17 +20,14 @@ import requests
 class XForceError(Exception):
     """Base Exception raised by this module."""
     def __init__(self, message="There was an ambiguous exception that occurred while using the API.", url=None, details=None):
-        self.message = message
-        self.url = url
-        self.details = details
-        super().__init__(f'{self.message}\nURL: {self.url}\nDetails: {self.details}')
+        super().__init__(f'{message} | URL: {url} | Details: {details}')
 
 class XForceConnectionError(XForceError):
     """Exception raised when a connection error occured with the API."""
-    def __init__(self, url, details, suggestion=None):
+    def __init__(self, url, details, note=None):
         message = 'Error connecting to the API.'
-        if suggestion:
-            message = f'{message}\n{suggestion}'
+        if note:
+            message = f'{message} | Note: {note}'
         super().__init__(message, url, details)
 
 class XForceApiError(XForceError):
@@ -84,7 +81,7 @@ class xforce(object):
             raise XForceConnectionError(
                 url=url,
                 details=str(err),
-                suggestion='Likely due to the "validate server certificate" option.',
+                note='Likely due to the "validate server certificate" option.',
             )
         except requests.exceptions.ConnectionError as err:
             raise XForceConnectionError(
