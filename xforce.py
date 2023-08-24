@@ -17,10 +17,12 @@ import base64
 
 import requests
 
+
 class XForceError(Exception):
     """Base Exception raised by this module."""
     def __init__(self, message="There was an ambiguous exception that occurred while using the API.", url=None, details=None):
         super().__init__(f'{message} | URL: {url} | Details: {details}')
+
 
 class XForceConnectionError(XForceError):
     """Exception raised when a connection error occured with the API."""
@@ -29,6 +31,7 @@ class XForceConnectionError(XForceError):
         if note:
             message = f'{message} | Note: {note}'
         super().__init__(message, url, details)
+
 
 class XForceApiError(XForceError):
     """Raised when the API returns an HTTP error"""
@@ -42,6 +45,7 @@ class XForceApiError(XForceError):
             response_data = {}
         details = response_data.get('message', details)
         super().__init__(message, url, details)
+
 
 class xforce(object):
 
