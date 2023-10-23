@@ -115,6 +115,7 @@ class XforceConnector(BaseConnector):
         self.debug_print('Started _test_connectivity with param %s' % param)
 
         xf = self._initialize_xforce()
+        action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
             # if for some reason google doesn't exist this should still
@@ -124,14 +125,14 @@ class XforceConnector(BaseConnector):
             self.debug_print('dns_report: %s' % dns_report)
 
         except XForceError as err:
-            return self.set_status_save_progress(
+            return action_result.set_status(
                 phantom.APP_ERROR,
                 'Failed test connectivity',
                 exception=err,
             )
         else:
             if 'xforce_dns' not in dns_report:
-                return self.set_status_save_progress(
+                return action_result.set_status(
                     phantom.APP_ERROR,
                     'Error connecting to IBM X_Force. Details: Unexpected data in X_Force DNS report _ ' + str(
                         dns_report)
