@@ -80,7 +80,7 @@ class xforce(object):
                 verify=self.verify_cert
             )
 
-            r.raise_for_status()
+            r.raise_for_status
         except requests.exceptions.SSLError as err:
             raise XForceConnectionError(
                 url=url,
