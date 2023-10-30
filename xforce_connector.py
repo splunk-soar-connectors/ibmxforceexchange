@@ -156,11 +156,17 @@ class XforceConnector(BaseConnector):
                 exception=err,
             )
 
-        registrant = [
-            contact for contact
-            in whois_results['xforce_whois']['contact']
-            if contact['type'] == 'registrant'
-        ] or [{}]
+        try:
+            registrant = [
+                contact for contact
+                in whois_results['xforce_whois']['contact']
+                if contact['type'] == 'registrant'
+            ] or [{}]
+        except Exception:
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                'Action failed. Please check value of input/asset.'
+            )
 
         summary = {
             'registrar_name':
@@ -181,9 +187,7 @@ class XforceConnector(BaseConnector):
 
         action_result.update_summary(summary)
         action_result.add_data(whois_results)
-        action_result.set_status(phantom.APP_SUCCESS)
-
-        return action_result.get_status()
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_whois_ip(self, param, action_id):
         self.debug_print('Started whois_ip with param %s' % param)
@@ -312,11 +316,8 @@ class XforceConnector(BaseConnector):
 
         action_result.update_summary(summary)
         action_result.add_data(ip_report_results)
-        action_result.set_status(phantom.APP_SUCCESS)
-
         self.debug_print('Done ip_reputation')
-
-        return action_result.get_status()
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_domain_reputation(self, param, action_id):
         self.debug_print('Started domain_reputation with param %s' % param)
@@ -442,10 +443,8 @@ class XforceConnector(BaseConnector):
 
         action_result.update_summary(summary)
         action_result.add_data(url_report_results)
-        action_result.set_status(phantom.APP_SUCCESS)
-
         self.debug_print('Done url_reputation with param %s' % param)
-        return action_result.get_status()
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def file_reputation(self, param, action_id):
         self.debug_print('Started file_reputation with param %s' % param)
@@ -627,11 +626,8 @@ class XforceConnector(BaseConnector):
 
         action_result.update_summary(summary)
         action_result.add_data(file_report_results)
-        action_result.set_status(phantom.APP_SUCCESS)
-
         self.debug_print('Done file_reputation with param %s' % param)
-
-        return action_result.get_status()
+        return action_result.set_status(phantom.APP_SUCCESS)
 
 
 if __name__ == '__main__':
