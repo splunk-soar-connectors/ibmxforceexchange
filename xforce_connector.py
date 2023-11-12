@@ -1,6 +1,6 @@
 # File: xforce_connector.py
 #
-# Copyright (c) 2021-2022 Splunk Inc.
+# Copyright (c) 2021-2023 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import phantom.app as phantom
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
-from xforce import xforce
+from xforce import XForceError, xforce
 
 
 class XforceConnector(BaseConnector):
@@ -115,6 +115,7 @@ class XforceConnector(BaseConnector):
         self.debug_print('Started _test_connectivity with param %s' % param)
 
         xf = self._initialize_xforce()
+        action_result = self.add_action_result(ActionResult(dict(param)))
 
         try:
             # if for some reason google doesn't exist this should still
@@ -123,14 +124,15 @@ class XforceConnector(BaseConnector):
             dns_report = xf.get_dns('google.com')
             self.debug_print('dns_report: %s' % dns_report)
 
-        except Exception as err:
-            return self.set_status_save_progress(
+        except XForceError as err:
+            return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error connecting to IBM X_Force. Details:' + err.message
+                'Failed test connectivity',
+                exception=err,
             )
         else:
             if 'xforce_dns' not in dns_report:
-                return self.set_status_save_progress(
+                return action_result.set_status(
                     phantom.APP_ERROR,
                     'Error connecting to IBM X_Force. Details: Unexpected data in X_Force DNS report _ ' + str(
                         dns_report)
@@ -147,17 +149,24 @@ class XforceConnector(BaseConnector):
 
         try:
             whois_results = xf.get_whois(param['query_value'])
-        except Exception as err:
-            return self.set_status_save_progress(
+        except XForceError as err:
+            return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force WHOIS. Details:' + err.message
+                'Error running IBM X_Force WHOIS',
+                exception=err,
             )
 
-        registrant = [
-            contact for contact
-            in whois_results['xforce_whois']['contact']
-            if contact['type'] == 'registrant'
-        ] or [{}]
+        try:
+            registrant = [
+                contact for contact
+                in whois_results['xforce_whois']['contact']
+                if contact['type'] == 'registrant'
+            ] or [{}]
+        except Exception:
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                'Action failed. Please check value of input/asset.'
+            )
 
         summary = {
             'registrar_name':
@@ -178,9 +187,7 @@ class XforceConnector(BaseConnector):
 
         action_result.update_summary(summary)
         action_result.add_data(whois_results)
-        action_result.set_status(phantom.APP_SUCCESS)
-
-        return action_result.get_status()
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_whois_ip(self, param, action_id):
         self.debug_print('Started whois_ip with param %s' % param)
@@ -206,25 +213,32 @@ class XforceConnector(BaseConnector):
 
         try:
             ip_report_results = xf.get_ip_report(param['ip'])
-        except Exception as err:
-            return self.set_status_save_progress(
+        except XForceError as err:
+            return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force IP Report. Details:' + err.message
+                'Error running IBM X_Force IP Report',
+                exception=err,
             )
 
         try:
             ip_malware_results = xf.get_ip_malware(param['ip'])
-        except Exception as err:
-            return self.set_status_save_progress(phantom.APP_ERROR,
-                                                 'Error running IBM X_Force IP Malware report. Details: ' + err.message)
+        except XForceError as err:
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                'Error running IBM X_Force IP Malware report',
+                exception=err,
+            )
 
         ip_report_results.update(ip_malware_results)
 
         try:
             dns_results = xf.get_dns(param['ip'])
-        except Exception as err:
-            return self.set_status_save_progress(phantom.APP_ERROR,
-                                                 'Error running IBM X_Force DNS report. Details: ' + err.message)
+        except XForceError as err:
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                'Error running IBM X_Force DNS report',
+                exception=err,
+            )
 
         ip_report_results.update(dns_results)
 
@@ -302,11 +316,8 @@ class XforceConnector(BaseConnector):
 
         action_result.update_summary(summary)
         action_result.add_data(ip_report_results)
-        action_result.set_status(phantom.APP_SUCCESS)
-
         self.debug_print('Done ip_reputation')
-
-        return action_result.get_status()
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_domain_reputation(self, param, action_id):
         self.debug_print('Started domain_reputation with param %s' % param)
@@ -331,9 +342,12 @@ class XforceConnector(BaseConnector):
 
         try:
             url_report_results = xf.get_url_report(param['query_value'])
-        except Exception as err:
-            return self.set_status_save_progress(phantom.APP_ERROR,
-                                                 'Error running IBM X_Force url Report. Details:' + err.message)
+        except XForceError as err:
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                'Error running IBM X_Force url Report',
+                exception=err,
+            )
 
         if url_report_results['xforce_url_report'].get('error') is not None:
             summary = {
@@ -349,19 +363,23 @@ class XforceConnector(BaseConnector):
 
         try:
             url_malware_results = xf.get_url_malware(param['query_value'])
-        except Exception as err:
-            return self.set_status_save_progress(
+        except XForceError as err:
+            return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force url Malware report. Details: ' + err.message)
+                'Error running IBM X_Force url Malware report',
+                exception=err,
+            )
 
         url_report_results.update(url_malware_results)
 
         try:
             dns_results = xf.get_dns(param['query_value'])
-        except Exception as err:
-            return self.set_status_save_progress(
+        except XForceError as err:
+            return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force DNS report. Details: ' + err.message)
+                'Error running IBM X_Force DNS report',
+                exception=err,
+            )
 
         url_report_results.update(dns_results)
 
@@ -425,10 +443,8 @@ class XforceConnector(BaseConnector):
 
         action_result.update_summary(summary)
         action_result.add_data(url_report_results)
-        action_result.set_status(phantom.APP_SUCCESS)
-
         self.debug_print('Done url_reputation with param %s' % param)
-        return action_result.get_status()
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def file_reputation(self, param, action_id):
         self.debug_print('Started file_reputation with param %s' % param)
@@ -443,10 +459,11 @@ class XforceConnector(BaseConnector):
 
         try:
             file_report_results = xf.get_malware_report(param['hash'])
-        except Exception as err:
-            return self.set_status_save_progress(
+        except XForceError as err:
+            return action_result.set_status(
                 phantom.APP_ERROR,
-                'Error running IBM X_Force file report. Details:' + err.message
+                'Error running IBM X_Force file report',
+                exception=err,
             )
 
         if file_report_results['xforce_malware_report'].get('error') is not None:
@@ -609,11 +626,8 @@ class XforceConnector(BaseConnector):
 
         action_result.update_summary(summary)
         action_result.add_data(file_report_results)
-        action_result.set_status(phantom.APP_SUCCESS)
-
         self.debug_print('Done file_reputation with param %s' % param)
-
-        return action_result.get_status()
+        return action_result.set_status(phantom.APP_SUCCESS)
 
 
 if __name__ == '__main__':
