@@ -1,2 +1,1 @@
 **Unreleased**
-* Improve error handling
