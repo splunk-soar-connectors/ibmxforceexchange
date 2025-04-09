@@ -1,9 +1,2 @@
-Splunk SOAR IBM X-Force Exchange
-Copyright (c) AvantGarde Partners 2017
-
-Third-party Software Attributions:
-
-Library: requests
-Version: 2.25.0
-License: Apache 2.0
-Kenneth Reitz
+Splunk SOAR App: IBM X-Force Exchange
+Copyright (c) 2021-2025 Splunk Inc.
