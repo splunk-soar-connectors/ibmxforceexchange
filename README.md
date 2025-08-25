@@ -1,9 +1,9 @@
 # IBM X-Force Exchange
 
-Publisher: Splunk \
-Connector Version: 1.2.0 \
-Product Vendor: IBM \
-Product Name: IBM X-Force Exchange \
+Publisher: Splunk <br>
+Connector Version: 1.2.0 <br>
+Product Vendor: IBM <br>
+Product Name: IBM X-Force Exchange <br>
 Minimum Product Version: 6.1.0
 
 This app implements various 'investigative' actions on the 'IBM X-Force Exchange' device
@@ -21,19 +21,19 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[ip reputation](#action-ip-reputation) - Returns IP reputation report \
-[domain reputation](#action-domain-reputation) - Returns domain reputation report \
-[whois domain](#action-whois-domain) - Returns WHOIS report \
-[whois ip](#action-whois-ip) - Returns WHOIS report \
-[url reputation](#action-url-reputation) - Returns URL reputation report \
-[file reputation](#action-file-reputation) - Returns malware report for a given hash \
+[ip reputation](#action-ip-reputation) - Returns IP reputation report <br>
+[domain reputation](#action-domain-reputation) - Returns domain reputation report <br>
+[whois domain](#action-whois-domain) - Returns WHOIS report <br>
+[whois ip](#action-whois-ip) - Returns WHOIS report <br>
+[url reputation](#action-url-reputation) - Returns URL reputation report <br>
+[file reputation](#action-file-reputation) - Returns malware report for a given hash <br>
 [test connectivity](#action-test-connectivity) - Validates connectivity to XForce
 
 ## action: 'ip reputation'
 
 Returns IP reputation report
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Runs the X-Force IP Report, IP Malware Report, and DNS Lookup.
@@ -120,7 +120,7 @@ action_result.data.\*.xforce_dns.Passive.records.\*.last | string | | |
 
 Returns domain reputation report
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Runs the X-Force URL Report and URL Malware Report (both of which accept domains), and DNS Lookup.
@@ -183,7 +183,7 @@ action_result.data.\*.xforce_dns.Passive.records.\*.last | string | | |
 
 Returns WHOIS report
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -222,7 +222,7 @@ action_result.data.\*.xforce_whois.contact.\*.country | string | | |
 
 Returns WHOIS report
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -261,7 +261,7 @@ action_result.data.\*.xforce_whois.contact.\*.country | string | | |
 
 Returns URL reputation report
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Runs the X-Force URL Report, URL Malware Report, and DNS Lookup.
@@ -324,7 +324,7 @@ action_result.data.\*.xforce_dns.Passive.records.\*.last | string | | |
 
 Returns malware report for a given hash
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -411,7 +411,7 @@ action_result.data.\*.xforce_malware_report.malware.origins.subjects.rows.\*.typ
 
 Validates connectivity to XForce
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
