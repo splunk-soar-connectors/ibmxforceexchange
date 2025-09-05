@@ -1,7 +1,7 @@
 # IBM X-Force Exchange
 
 Publisher: Splunk <br>
-Connector Version: 1.2.0 <br>
+Connector Version: 1.2.1 <br>
 Product Vendor: IBM <br>
 Product Name: IBM X-Force Exchange <br>
 Minimum Product Version: 6.1.0
