@@ -70,7 +70,7 @@ def test_valid_file_hash():
         return True
 
     summary = {
-        "risk": (file_report_results(["xforce_malware_report"].get("malware") or {"risk": "Unknown"}).get("risk", "Unknown")),
+        "risk": (file_report_results["xforce_malware_report"].get("malware") or {"risk": "Unknown"}).get("risk", "Unknown"),
         "cnc_servers": cnc_server_count,
         "email_sources": email_source_count,
         "email_subjects": email_subject_count,
@@ -79,15 +79,16 @@ def test_valid_file_hash():
             [
                 family
                 for family in (
-                    file_report_results((["xforce_malware_report"].get("malware") or {"origins": None}).get("origins") or {"family": None}).get(
-                        "family", []
-                    )
+                    file_report_results["xforce_malware_report"]
+                    .get("malware", {"origins": None})
+                    .get("origins", {"family": None})
+                    .get("family", [])
                 )
             ]
             + [
                 family + "(" + str(family_dict.get("count", 0)) + ")"
                 for family, family_dict in (
-                    file_report_results((["xforce_malware_report"].get("malware") or {"familyMembers": None}).get("familyMembers") or {}).items()
+                    file_report_results["xforce_malware_report"].get("malware", {"familyMembers": None}).get("familyMembers", {}).items()
                 )
             ]
         ),

@@ -15,7 +15,7 @@
     "product_version_regex": ".*",
     "min_phantom_version": "6.1.0",
     "fips_compliant": false,
-    "python_version": "3",
+    "python_version": "3.9, 3.13",
     "logo": "logo_ibmxforceexchange.svg",
     "logo_dark": "logo_ibmxforceexchange_dark.svg",
     "configuration": {
@@ -1602,5 +1602,11 @@
             "output": [],
             "versions": "EQ(*)"
         }
-    ]
+    ],
+    "pip39_dependencies": {
+        "wheel": []
+    },
+    "pip313_dependencies": {
+        "wheel": []
+    }
 }
