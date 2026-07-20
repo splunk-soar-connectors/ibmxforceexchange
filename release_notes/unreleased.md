@@ -1,4 +1,1 @@
 **Unreleased**
-
-* Updated connector development tooling.
-* Encoded WHOIS query values as a single URL path segment before sending authenticated requests.
