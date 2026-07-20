@@ -1,6 +1,6 @@
 # File: xforce.py
 #
-# Copyright (c) 2021-2025 Splunk Inc.
+# Copyright (c) 2021-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
 # and limitations under the License.
 
 import base64
+from urllib.parse import quote
 
 import requests
 
@@ -149,7 +150,7 @@ class xforce:
         return json_response
 
     def get_whois(self, query_data):
-        response = self._send_request("/whois/" + query_data, "get")
+        response = self._send_request("/whois/" + quote(query_data, safe=""), "get")
         json_response = {"xforce_whois": response}
 
         return json_response
