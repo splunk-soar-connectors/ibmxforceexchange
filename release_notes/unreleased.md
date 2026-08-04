@@ -1,1 +1,3 @@
 **Unreleased**
+
+* Validate and encode reputation lookup values as single API path segments.

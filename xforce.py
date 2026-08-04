@@ -60,6 +60,14 @@ class xforce:
         self.header = {"Authorization": ("Basic " + base64.b64encode(self.auth_token.encode("utf-8")).decode("utf-8"))}
         self.verify_cert = verify_cert
 
+    @staticmethod
+    def _encode_path_value(value):
+        value = str(value)
+        if value in {".", ".."}:
+            raise XForceError("Invalid path parameter.")
+
+        return quote(value, safe="")
+
     def _send_request(self, url, method, payload=None, content_type=None):
         url = self.base_url + url
         request_func = getattr(requests, method)
@@ -102,55 +110,55 @@ class xforce:
         return results
 
     def get_dns(self, query_value):
-        response = self._send_request("/resolve/" + query_value, "get")
+        response = self._send_request("/resolve/" + self._encode_path_value(query_value), "get")
         json_response = {"xforce_dns": response}
 
         return json_response
 
     def get_ip_report(self, ip):
-        response = self._send_request("/ipr/" + ip, "get")
+        response = self._send_request("/ipr/" + self._encode_path_value(ip), "get")
         json_response = {"xforce_ip_report": response}
 
         return json_response
 
     def get_ip_reputation(self, ip):
-        response = self._send_request("/ipr/history/" + ip, "get")
+        response = self._send_request("/ipr/history/" + self._encode_path_value(ip), "get")
         json_response = {"xforce_ip_reputation": response}
 
         return json_response
 
     def get_ip_malware(self, ip):
-        response = self._send_request("/ipr/malware/" + ip, "get")
+        response = self._send_request("/ipr/malware/" + self._encode_path_value(ip), "get")
         json_response = {"xforce_ip_malware": response}
 
         return json_response
 
     def get_malware_report(self, file_hash):
-        response = self._send_request("/malware/" + file_hash, "get")
+        response = self._send_request("/malware/" + self._encode_path_value(file_hash), "get")
         json_response = {"xforce_malware_report": response}
 
         return json_response
 
     def get_malware_family(self, family):
-        response = self._send_request("/malware/family/" + family, "get")
+        response = self._send_request("/malware/family/" + self._encode_path_value(family), "get")
         json_response = {"xforce_malware_family": response}
 
         return json_response
 
     def get_url_report(self, url):
-        response = self._send_request("/url/" + url, "get")
+        response = self._send_request("/url/" + self._encode_path_value(url), "get")
         json_response = {"xforce_url_report": response}
 
         return json_response
 
     def get_url_malware(self, url):
-        response = self._send_request("/url/malware/" + url, "get")
+        response = self._send_request("/url/malware/" + self._encode_path_value(url), "get")
         json_response = {"xforce_url_malware": response}
 
         return json_response
 
     def get_whois(self, query_data):
-        response = self._send_request("/whois/" + quote(query_data, safe=""), "get")
+        response = self._send_request("/whois/" + self._encode_path_value(query_data), "get")
         json_response = {"xforce_whois": response}
 
         return json_response
